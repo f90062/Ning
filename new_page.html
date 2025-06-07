@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Sing Hair Salon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D4037',
+                        secondary: '#8D6E63',
+                        accent: '#E91E63',
+                        neutral: '#F9F9F9',
+                        dark: '#3E2723'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-balance {
+                text-wrap: balance;
+            }
+            .transition-custom {
+                transition: all 0.3s ease;
+            }
+            .hover-lift {
+                transform: translateY(0);
+                transition: transform 0.3s ease;
+            }
+            .hover-lift:hover {
+                transform: translateY(-8px);
+            }
+            .shadow-custom {
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-neutral text-gray-700">
+    <!-- 導航欄 -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-primary">A-Sing</a>
+            
+            <!-- 桌面導航 -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-700 hover:text-accent transition-custom">關於我們</a>
+                <a href="#services" class="text-gray-700 hover:text-accent transition-custom">服務項目</a>
+                <a href="#gallery" class="text-gray-700 hover:text-accent transition-custom">作品集</a>
+                <a href="#team" class="text-gray-700 hover:text-accent transition-custom">設計團隊</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-accent transition-custom">客戶評價</a>
+                <a href="#faq" class="text-gray-700 hover:text-accent transition-custom">常見問題</a>
+                <a href="#contact" class="text-gray-700 hover:text-accent transition-custom">聯絡我們</a>
+            </div>
+            
+            <!-- 預約按鈕 -->
+            <a href="#contact" class="hidden md:inline-block bg-accent text-white px-5 py-2 rounded-full hover:bg-accent/90 transition-custom">
+                立即預約
+            </a>
+            
+            <!-- 手機導航按鈕 -->
+            <button id="mobile-menu-button" class="md:hidden text-xl text-primary">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 手機導航菜單 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#about" class="text-gray-700 hover:text-accent py-2 transition-custom">關於我們</a>
+                <a href="#services" class="text-gray-700 hover:text-accent py-2 transition-custom">服務項目</a>
+                <a href="#gallery" class="text-gray-700 hover:text-accent py-2 transition-custom">作品集</a>
+                <a href="#team" class="text-gray-700 hover:text-accent py-2 transition-custom">設計團隊</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-accent py-2 transition-custom">客戶評價</a>
+                <a href="#faq" class="text-gray-700 hover:text-accent py-2 transition-custom">常見問題</a>
+                <a href="#contact" class="text-gray-700 hover:text-accent py-2 transition-custom">聯絡我們</a>
+                <a href="#contact" class="bg-accent text-white px-5 py-2 rounded-full text-center hover:bg-accent/90 transition-custom">
+                    立即預約
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄區域 -->
+    <header class="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-primary/5 to-accent/5">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-primary leading-tight mb-6">
+                    日系質感<br><span class="text-accent">專屬設計</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                    A-Sing Hair Salon 提供專業日系美髮服務，由資深設計師一對一諮詢，打造屬於你的獨特風格。
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#services" class="bg-primary text-white px-8 py-3 rounded-full text-center hover:bg-primary/90 transition-custom shadow-lg">
+                        服務項目
+                    </a>
+                    <a href="#contact" class="border-2 border-primary text-primary px-8 py-3 rounded-full text-center hover:bg-primary hover:text-white transition-custom">
+                        立即預約
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 relative">
+                <img src="https://picsum.photos/id/1027/600/800" alt="美髮沙龍形象" class="w-full h-auto rounded-2xl shadow-2xl">
+                <div class="absolute -bottom-5 -left-5 bg-white p-4 rounded-xl shadow-lg">
+                    <div class="flex items-center">
+                        <div class="text-accent text-4xl mr-3">
+                            <i class="fa fa-trophy"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">2024年度</p>
+                            <p class="font-bold text-primary">最佳日系美髮沙龍</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 關於我們 -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-primary mb-4">關於 A-Sing</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    成立於2015年，A-Sing Hair Salon 一直秉持日系美髮理念，融合東西方美學，為每位顧客打造獨一無二的專屬風格。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-neutral p-8 rounded-xl shadow-custom hover-lift">
+                    <div class="text-accent text-4xl mb-6">
+                        <i class="fa fa-scissors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-4">專業技術</h3>
+                    <p class="text-gray-600">
+                        我們的設計師均接受日本美髮技術培訓，掌握最新日系剪裁、染燙技巧，確保每位顧客都能獲得最專業的服務。
+                    </p>
+                </div>
+                
+                <div class="bg-neutral p-8 rounded-xl shadow-custom hover-lift">
+                    <div class="text-accent text-4xl mb-6">
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-4">用心服務</h3>
+                    <p class="text-gray-600">
+                        每位顧客都能享受一對一的專業諮詢服務，我們傾聽您的需求，結合臉型、膚色和個人風格，為您量身定制。
+                    </p>
+                </div>
+                
+                <div class="bg-neutral p-8 rounded-xl shadow-custom hover-lift">
+                    <div class="text-accent text-4xl mb-6">
+                        <i class="fa fa-leaf"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-4">天然產品</h3>
+                    <p class="text-gray-600">
+                        我們使用日本進口的天然美髮產品，對頭髮和頭皮零傷害，同時提供專業的頭皮護理服務，維護頭髮健康。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務項目 -->
+    <section id="services" class="py-20 bg-neutral">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-primary mb-4">服務項目</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    我們提供全方位的美髮服務，從日系剪裁到特殊染髮，每位設計師都能根據您的需求提供專業建議。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 剪髮服務 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/1062/600/400" alt="剪髮服務" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white text-xl font-bold p-6">剪髮服務</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">日系層次剪裁、男士精準剪裁、兒童專屬剪髮，提供專業造型建議。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-bold">NT$ 680 起</span>
+                            <a href="#contact" class="text-primary hover:text-accent transition-custom">
+                                預約服務 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 染髮服務 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/1074/600/400" alt="染髮服務" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white text-xl font-bold p-6">染髮服務</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">單色染、挑染、霧面染、特殊色，使用日本進口天然染劑，護色持久。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-bold">NT$ 1,280 起</span>
+                            <a href="#contact" class="text-primary hover:text-accent transition-custom">
+                                預約服務 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 燙髮服務 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/1080/600/400" alt="燙髮服務" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white text-xl font-bold p-6">燙髮服務</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">日系水燙、陶瓷燙、空氣燙、捲燙，根據頭髮質地和臉型設計最適合的捲度。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-bold">NT$ 1,580 起</span>
+                            <a href="#contact" class="text-primary hover:text-accent transition-custom">
+                                預約服務 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 護髮服務 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/1071/600/400" alt="護髮服務" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white text-xl font-bold p-6">護髮服務</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">深層滋潤護理、角質修復、頭皮護理，使用高級護髮產品，恢復秀髮健康光澤。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-bold">NT$ 580 起</span>
+                            <a href="#contact" class="text-primary hover:text-accent transition-custom">
+                                預約服務 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 造型服務 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/1068/600/400" alt="造型服務" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white text-xl font-bold p-6">造型服務</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">婚禮造型、宴會造型、舞台造型，專業造型師根據場合和服裝搭配設計完美髮型。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-bold">NT$ 880 起</span>
+                            <a href="#contact" class="text-primary hover:text-accent transition-custom">
+                                預約服務 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 美甲服務 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/1081/600/400" alt="美甲服務" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white text-xl font-bold p-6">美甲服務</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">日式美甲、光療美甲、手部護理，提供多種款式選擇，打造精緻手部妝容。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-bold">NT$ 680 起</span>
+                            <a href="#contact" class="text-primary hover:text-accent transition-custom">
+                                預約服務 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-primary mb-4">作品展示</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    探索我們的最新作品，每一款都是設計師精心打造的獨特風格，點擊圖片可查看詳細資訊。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group relative overflow-hidden rounded-xl shadow-custom">
+                    <img src="https://picsum.photos/id/1074/600/800" alt="日系清新染髮" class="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">日系清新染髮</h3>
+                        <p class="text-white/90 text-sm mb-4">使用日本進口染劑，打造自然透亮的清新色調</p>
+                        <a href="#" class="text-accent hover:text-white transition-custom text-sm">查看詳細 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl shadow-custom">
+                    <img src="https://picsum.photos/id/1062/600/800" alt="層次剪裁" class="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">層次剪裁</h3>
+                        <p class="text-white/90 text-sm mb-4">根據臉型設計的精準層次，增加髮量視覺效果</p>
+                        <a href="#" class="text-accent hover:text-white transition-custom text-sm">查看詳細 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl shadow-custom">
+                    <img src="https://picsum.photos/id/1066/600/800" alt="空氣燙" class="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">空氣燙</h3>
+                        <p class="text-white/90 text-sm mb-4">自然蓬鬆的捲度，輕盈不厚重，適合各種臉型</p>
+                        <a href="#" class="text-accent hover:text-white transition-custom text-sm">查看詳細 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl shadow-custom">
+                    <img src="https://picsum.photos/id/1071/600/800" alt="護色染髮" class="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">護色染髮</h3>
+                        <p class="text-white/90 text-sm mb-4">特殊護色配方，染後頭髮更加柔順亮麗，色澤持久</p>
+                        <a href="#" class="text-accent hover:text-white transition-custom text-sm">查看詳細 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl shadow-custom">
+                    <img src="https://picsum.photos/id/1072/600/800" alt="男士精準剪裁" class="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">男士精準剪裁</h3>
+                        <p class="text-white/90 text-sm mb-4">根據頭髮質地和臉型設計，呈現精幹俐落的現代男士形象</p>
+                        <a href="#" class="text-accent hover:text-white transition-custom text-sm">查看詳細 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl shadow-custom">
+                    <img src="https://picsum.photos/id/1077/600/800" alt="婚禮造型" class="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">婚禮造型</h3>
+                        <p class="text-white/90 text-sm mb-4">優雅大方的婚禮髮型設計，搭配珠寶和頭飾，打造完美新娘形象</p>
+                        <a href="#" class="text-accent hover:text-white transition-custom text-sm">查看詳細 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border-2 border-primary text-primary px-8 py-3 rounded-full hover:bg-primary hover:text-white transition-custom">
+                    查看更多作品
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 設計團隊 -->
+    <section id="team" class="py-20 bg-neutral">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-primary mb-4">設計團隊</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    每位設計師都擁有5年以上的美髮經驗，並定期赴日進修，掌握最新日系美髮技術和潮流趨勢。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 設計師1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://picsum.photos/id/1012/400/600" alt="設計師 Amy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-1">Amy</h3>
+                        <p class="text-accent text-sm mb-3">技術總監</p>
+                        <p class="text-gray-600 text-sm">
+                            8年日系美髮經驗，擅長染髮和精準剪裁，曾獲得日本美髮大賽東京區優勝。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 設計師2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://picsum.photos/id/1025/400/600" alt="設計師 Ken" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-1">Ken</h3>
+                        <p class="text-accent text-sm mb-3">資深設計師</p>
+                        <p class="text-gray-600 text-sm">
+                            6年美髮經驗，擅長日系層次剪裁和空氣燙，注重與顧客溝通，打造符合需求的個性風格。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 設計師3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://picsum.photos/id/1062/400/600" alt="設計師 Sarah" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-1">Sarah</h3>
+                        <p class="text-accent text-sm mb-3">造型顧問</p>
+                        <p class="text-gray-600 text-sm">
+                            7年美髮經驗，擅長婚禮造型和特殊染髮，曾為多位藝人提供造型服務，風格大膽創新。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 設計師4 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-custom group">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://picsum.photos/id/1074/400/600" alt="設計師 Tom" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-accent transition-custom">
+                                        <i class="fa fa-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-1">Tom</h3>
+                        <p class="text-accent text-sm mb-3">技術顧問</p>
+                        <p class="text-gray-600 text-sm">
+                            10年美髮經驗，曾在日本深造3年，擅長各種燙髮技術和頭皮護理，技術精湛細膩。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 客戶評價 -->
+    <section id="testimonials" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-primary mb-4">客戶評價</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    看看我們的客戶如何評價A-Sing Hair Salon的服務和技術，每位顧客的滿意度是我們最大的動力。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 評價1 -->
+                <div class="bg-neutral p-8 rounded-xl shadow-custom">
+                    <div class="text-accent mb-4">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">
+                        "第一次來A-Sing就被Amy老師的專業征服了！我一直想嘗試日系剪髮，但又怕太誇張，Amy老師根據我的臉型和需求設計的層次剪髮非常自然，同事們都說很好看！"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://picsum.photos/id/1027/100/100" alt="客戶 Lisa" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold text-primary">Lisa Wang</h4>
+                            <p class="text-gray-500 text-sm">染髮 & 剪髮</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 評價2 -->
+                <div class="bg-neutral p-8 rounded-xl shadow-custom">
+                    <div class="text-accent mb-4">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">
+                        "Ken老師的空氣燙技術真的太棒了！我的頭髮本來很塌，燙完後變得蓬鬆又自然，而且完全不會顯得厚重。服務也很周到，整個過程都很舒適，非常推薦！"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://picsum.photos/id/1012/100/100" alt="客戶 Michael" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold text-primary">Michael Chen</h4>
+                            <p class="text-gray-500 text-sm">空氣燙</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 評價3 -->
+                <div class="bg-neutral p-8 rounded-xl shadow-custom">
+                    <div class="text-accent mb-4">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">
+                        "婚禮前在A-Sing做的造型真的很滿意！Sarah老師根據我的婚禮主題和禮服設計的髮型非常優雅，一整天都沒有塌，朋友們都誇讚。下次一定還會再來！"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://picsum.photos/id/1062/100/100" alt="客戶 Jenny" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold text-primary">Jenny Lin</h4>
+                            <p class="text-gray-500 text-sm">婚禮造型</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常見問題 -->
+    <section id="faq" class="py-20 bg-neutral">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-primary mb-4">常見問題</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    這裡是顧客最常問的問題，如果你有其他疑問，歡迎透過LINE或電話聯繫我們。
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6">
+                    <!-- FAQ 1 -->
+                    <div class="bg-white rounded-xl shadow-custom overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                            <h3 class="text-lg font-bold text-primary">如何預約服務？</h3>
+                            <i class="fa fa-plus text-accent transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-gray-600">
+                                您可以透過以下方式預約服務：<br>
+                                1. 線上預約：點擊網站上的"立即預約"按鈕，填寫預約表單<br>
+                                2. LINE預約：透過LINE官方帳號@asinghair預約<br>
+                                3. 電話預約：撥打0900-123-456與我們聯繫<br>
+                                建議提前3-7天預約，尤其是週末和節假日。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="bg-white rounded-xl shadow-custom overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                            <h3 class="text-lg font-bold text-primary">服務價格如何計算？</h3>
+                            <i class="fa fa-plus text-accent transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-gray-600">
+                                我們的服務價格根據服務項目和頭髮長度、質地等因素有所不同。網站上的價格僅供參考，實際價格會在服務前由設計師根據您的需求和頭髮狀況評估確定。第一次光臨的顧客可以享受9折優惠。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="bg-white rounded-xl shadow-custom overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                            <h3 class="text-lg font-bold text-primary">染燙後如何護理頭髮？</h3>
+                            <i class="fa fa-plus text-accent transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-gray-600">
+                                染燙後的頭髮需要特別護理：<br>
+                                1. 建議使用染燙專用護髮產品，避免使用高鹼性洗髮精<br>
+                                2. 避免過度吹整，使用低溫吹風機<br>
+                                3. 定期做深層護理，建議每2-4週做一次護髮<br>
+                                4. 避免陽光直射，外出時可戴帽子<br>
+                                5. 避免過度使用造型產品
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="bg-white rounded-xl shadow-custom overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                            <h3 class="text-lg font-bold text-primary">可以指定設計師服務嗎？</h3>
+                            <i class="fa fa-plus text-accent transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-gray-600">
+                                當然可以！您可以在預約時指定想要的設計師。每位設計師的服務價格可能會有所不同，資深設計師和技術總監的服務費會略高。建議提前查看設計師的作品和擅長領域，選擇最適合您需求的設計師。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 5 -->
+                    <div class="bg-white rounded-xl shadow-custom overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                            <h3 class="text-lg font-bold text-primary">有學生或長者優惠嗎？</h3>
+                            <i class="fa fa-plus text-accent transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-gray-600">
+                                我們提供學生和65歲以上長者9折優惠。請在預約或結帳時出示有效證件。此外，我們也會不定期推出各種優惠活動，建議關注我們的官方粉絲頁或LINE官方帳號，以獲取最新優惠資訊。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡我們 -->
+    <section id="contact" class="py-20 bg-primary text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">聯絡我們</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-white/80">
+                    有任何問題或想預約服務？請透過以下方式與我們聯繫，我們將儘快回覆您。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <div class="bg-white/5 p-8 rounded-xl">
+                        <h3 class="text-xl font-bold mb-6">聯絡資訊</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="text-accent text-xl mr-4 mt-1">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">地址</h4>
+                                    <p class="text-white/80">桃園市桃園區大連二街168號</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-accent text-xl mr-4 mt-1">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">電話</h4>
+                                    <p class="text-white/80">0900-123-456</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-accent text-xl mr-4 mt-1">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">Email</h4>
+                                    <p class="text-white/80">asinghair@example.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-accent text-xl mr-4 mt-1">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">營業時間</h4>
+                                    <p class="text-white/80">
+                                        週二至週六 11:00-20:00<br>
+                                        週日 11:00-18:00<br>
+                                        週一公休
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12">
+                            <h3 class="text-xl font-bold mb-6">追蹤我們</h3>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-accent hover:border-accent transition-custom">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-accent hover:border-accent transition-custom">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-accent hover:border-accent transition-custom">
+                                    <i class="fa fa-line"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-accent hover:border-accent transition-custom">
+                                    <i class="fa fa-youtube-play"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-white/5 p-8 rounded-xl">
+                        <h3 class="text-xl font-bold mb-6">預約服務</h3>
+                        <form class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-2">姓名</label>
+                                <input type="text" id="name" class="w-full bg-white/10 border border-white/20 rounded px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="您的姓名">
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block text-sm font-medium mb-2">電話</label>
+                                <input type="tel" id="phone" class="w-full bg-white/10 border border-white/20 rounded px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="您的電話">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" id="email" class="w-full bg-white/10 border border-white/20 rounded px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="您的Email">
+                            </div>
+                            
+                            <div>
+                                <label for="service" class="block text-sm font-medium mb-2">服務項目</label>
+                                <select id="service" class="w-full bg-white/10 border border-white/20 rounded px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-accent">
+                                    <option value="" disabled selected>請選擇服務項目</option>
+                                    <option value="cut">剪髮服務</option>
+                                    <option value="color">染髮服務</option>
+                                    <option value="perm">燙髮服務</option>
+                                    <option value="treatment">護髮服務</option>
+                                    <option value="style">造型服務</option>
+                                    <option value="nail">美甲服務</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="date" class="block text-sm font-medium mb-2">預約日期</label>
+                                <input type="date" id="date" class="w-full bg-white/10 border border-white/20 rounded px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-accent">
+                            </div>
+                            
+                            <div>
+                                <label for="time" class="block text-sm font-medium mb-2">預約時間</label>
+                                <select id="time" class="w-full bg-white/10 border border-white/20 rounded px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-accent">
+                                    <option value="" disabled selected>請選擇時間</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-sm font-medium mb-2">備註</label>
+                                <textarea id="message" rows="4" class="w-full bg-white/10 border border-white/20 rounded px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="如有特殊需求請在此說明"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-accent text-white px-6 py-3 rounded-full hover:bg-accent/90 transition-custom">
+                                提交預約
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 地圖 -->
+    <div class="h-96 bg-gray-200">
+        <!-- 實際網站中可以嵌入Google Map -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.351433000856!2d121
