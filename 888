@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>539 號碼統計</title>
+    <!-- 引入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 React CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- 引入 Babel CDN，用於轉換 JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        /* 自定義字體，如果需要 */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // 主應用程式元件
+        const App = () => {
+            // 儲存所有號碼組的狀態，每組是一個包含選定號碼的陣列
+            const [numberSets, setNumberSets] = useState([[]]);
+            // 儲存每個號碼組的折疊狀態，預設第一個就展開
+            const [collapsedSets, setCollapsedSets] = useState([false]); 
+
+            // 儲存統計結果的狀態
+            const [missingNumbers, setMissingNumbers] = useState([]);
+            const [appearedNumbers, setAppearedNumbers] = useState({});
+
+            // 處理號碼選擇或取消選擇
+            const handleNumberToggle = (setIndex, number) => {
+                const newNumberSets = [...numberSets];
+                const currentSet = newNumberSets[setIndex];
+
+                if (currentSet.includes(number)) {
+                    // 如果號碼已存在，則移除
+                    newNumberSets[setIndex] = currentSet.filter(n => n !== number);
+                } else {
+                    // 如果號碼不存在，則新增並排序
+                    newNumberSets[setIndex] = [...currentSet, number].sort((a, b) => a - b);
+                }
+                setNumberSets(newNumberSets);
+            };
+
+            // 新增一組空的號碼組
+            const addNumberSet = () => {
+                const newNumberSets = [...numberSets, []];
+                // 將所有現有的號碼組設定為折疊狀態，新新增的號碼組設定為展開狀態
+                const newCollapsedStates = numberSets.map(() => true); // 將現有組折疊
+                newCollapsedStates.push(false); // 新新增的組保持展開
+
+                setNumberSets(newNumberSets);
+                setCollapsedSets(newCollapsedStates);
+            };
+
+            // 移除指定的號碼組
+            const removeNumberSet = (indexToRemove) => {
+                setNumberSets(numberSets.filter((_, index) => index !== indexToRemove));
+                setCollapsedSets(collapsedSets.filter((_, index) => index !== indexToRemove));
+            };
+
+            // 切換號碼組的折疊狀態
+            const toggleCollapse = (setIndex) => {
+                const newCollapsedSets = [...collapsedSets];
+                newCollapsedSets[setIndex] = !newCollapsedSets[setIndex];
+                setCollapsedSets(newCollapsedSets);
+            };
+
+            // 統計未出現的號碼
+            const calculateMissingNumbers = () => {
+                const allSelectedNumbers = new Set();
+                numberSets.forEach(set => {
+                    set.forEach(number => {
+                        allSelectedNumbers.add(number);
+                    });
+                });
+
+                const missing = [];
+                for (let i = 1; i <= 39; i++) {
+                    if (!allSelectedNumbers.has(i)) {
+                        missing.push(i);
+                    }
+                }
+                setMissingNumbers(missing);
+            };
+
+            // 統計出現的號碼及次數
+            const calculateAppearedNumbers = () => {
+                const counts = {};
+                for (let i = 1; i <= 39; i++) {
+                    counts[i] = 0; // 初始化所有號碼的計數為0
+                }
+
+                numberSets.forEach(set => {
+                    set.forEach(number => {
+                        if (counts[number] !== undefined) {
+                            counts[number]++;
+                        }
+                    });
+                });
+
+                // 過濾掉計數為0的號碼
+                const appeared = Object.entries(counts).filter(([, count]) => count > 0);
+                // 將結果轉換為物件，方便渲染
+                const appearedObj = Object.fromEntries(appeared);
+                setAppearedNumbers(appearedObj);
+            };
+
+            // 重置所有數據
+            const resetAll = () => {
+                setNumberSets([[]]); // 重置為一個空的號碼組
+                setCollapsedSets([false]); // 預設為展開
+                setMissingNumbers([]); // 清空未出現號碼
+                setAppearedNumbers({}); // 清空已出現號碼
+            };
+
+            return (
+                <div className="min-h-screen bg-black text-white p-4 sm:p-6 font-inter flex flex-col items-center">
+                    <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-8 text-center drop-shadow-lg">
+                        539 號碼統計
+                    </h1>
+
+                    {/* 號碼組列表 */}
+                    <div className="w-full max-w-4xl bg-gray-900 rounded-3xl shadow-xl p-6 sm:p-8 mb-8">
+                        <h2 className="text-2xl font-bold text-gray-200 mb-6 border-b-2 border-gray-700 pb-3">
+                            新增/編輯號碼組
+                        </h2>
+                        {numberSets.map((set, setIndex) => (
+                            <div key={setIndex} className="mb-6 p-4 border border-gray-700 rounded-2xl bg-gray-800 relative">
+                                <div className="flex justify-between items-center mb-3">
+                                    <h3 className="text-lg font-semibold text-gray-300">
+                                        號碼組 {setIndex + 1}
+                                    </h3>
+                                    <div className="flex items-center gap-2">
+                                        {numberSets.length > 1 && (
+                                            <button
+                                                onClick={() => removeNumberSet(setIndex)}
+                                                className="p-2 text-red-400 hover:text-red-600 rounded-full hover:bg-gray-700 transition-colors"
+                                                aria-label={`移除號碼組 ${setIndex + 1}`}
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        )}
+                                        <button
+                                            onClick={() => toggleCollapse(setIndex)}
+                                            className="p-2 text-gray-400 hover:text-gray-200 rounded-full hover:bg-gray-700 transition-colors"
+                                            aria-label={collapsedSets[setIndex] ? `展開號碼組 ${setIndex + 1}` : `折疊號碼組 ${setIndex + 1}`}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                style={{ transform: collapsedSets[setIndex] ? 'rotate(-90deg)' : 'rotate(0deg)' }}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {!collapsedSets[setIndex] && (
+                                    <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-1 sm:gap-2">
+                                        {Array.from({ length: 39 }, (_, i) => i + 1).map(number => (
+                                            <button
+                                                key={number}
+                                                onClick={() => handleNumberToggle(setIndex, number)}
+                                                className={`
+                                                    w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full text-sm sm:text-base font-bold transition-all duration-200 ease-in-out
+                                                    ${set.includes(number)
+                                                        ? 'bg-blue-600 text-white shadow-lg transform scale-105'
+                                                        : 'bg-gray-700 text-gray-200 hover:bg-gray-600 hover:text-white'
+                                                    }
+                                                    focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75
+                                                `}
+                                            >
+                                                {number}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                        <button
+                            onClick={addNumberSet}
+                            className="w-full py-3 px-6 bg-gray-700 text-white font-bold rounded-xl shadow-md hover:bg-gray-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-75"
+                        >
+                            新增號碼組 +
+                        </button>
+                    </div>
+
+                    {/* 統計按鈕 */}
+                    <div className="w-full max-w-4xl bg-gray-900 rounded-3xl shadow-xl p-6 sm:p-8 mb-8 flex flex-col sm:flex-row justify-around items-center gap-4">
+                        <button
+                            onClick={calculateMissingNumbers}
+                            className="flex-1 w-full sm:w-auto py-3 px-6 bg-gray-700 text-white font-bold rounded-xl shadow-md hover:bg-gray-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-75"
+                        >
+                            統計未出現號碼
+                        </button>
+                        <button
+                            onClick={calculateAppearedNumbers}
+                            className="flex-1 w-full sm:w-auto py-3 px-6 bg-gray-700 text-white font-bold rounded-xl shadow-md hover:bg-gray-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-75"
+                        >
+                            統計出現號碼及次數
+                        </button>
+                    </div>
+
+                    {/* 重置按鈕 */}
+                    <div className="w-full max-w-4xl bg-gray-900 rounded-3xl shadow-xl p-6 sm:p-8 mb-8 flex justify-center">
+                        <button
+                            onClick={resetAll}
+                            className="py-3 px-8 bg-red-700 text-white font-bold rounded-xl shadow-md hover:bg-red-800 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75"
+                        >
+                            全部重置
+                        </button>
+                    </div>
+
+                    {/* 統計結果顯示 */}
+                    <div className="w-full max-w-4xl bg-gray-900 rounded-3xl shadow-xl p-6 sm:p-8">
+                        <h2 className="text-2xl font-bold text-gray-200 mb-6 border-b-2 border-gray-700 pb-3">
+                            統計結果
+                        </h2>
+                        {/* 未出現號碼結果 */}
+                        <div className="mb-6">
+                            <h3 className="text-xl font-semibold text-red-400 mb-3">
+                                未出現的號碼 (1-39):
+                            </h3>
+                            <p className="text-base text-gray-300 break-words">
+                                {missingNumbers.length > 0 ? missingNumbers.join(', ') : '點擊「統計未出現號碼」按鈕查看結果'}
+                            </p>
+                        </div>
+
+                        {/* 出現號碼及次數結果 */}
+                        <div>
+                            <h3 className="text-xl font-semibold text-green-400 mb-3">
+                                出現的號碼及次數:
+                            </h3>
+                            {Object.keys(appearedNumbers).length > 0 ? (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                                    {Object.entries(appearedNumbers)
+                                        .sort(([numA], [numB]) => parseInt(numA) - parseInt(numB)) // 確保按號碼排序
+                                        .map(([number, count]) => (
+                                            <div key={number} className="flex flex-col items-center p-2 bg-gray-800 rounded-lg shadow-sm">
+                                                <span className="text-base font-medium text-gray-300">號碼 {number}</span>
+                                                <span className="text-lg font-bold text-blue-400">{count} 次</span>
+                                            </div>
+                                        ))}
+                                </div>
+                            ) : (
+                                <p className="text-base text-gray-300">
+                                    點擊「統計出現號碼及次數」按鈕查看結果
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // 將 React 應用程式渲染到 DOM 中
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
